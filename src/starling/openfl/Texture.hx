@@ -14,34 +14,34 @@ using openfl.display.BitmapData;
 
 @:native("openfl.display3D.textures.Texture") @:final class Texture extends TextureBase {
 	
-	private static var internalFormat:Int = -1;
+	private static var __internalFormat:Int = -1;
 	
-	public var optimizeForRenderToTexture:Bool;
+	public var __optimizeForRenderToTexture:Bool;
 	
-	public var mipmapsGenerated:Bool;
+	public var __mipmapsGenerated:Bool;
 	
 	public function new (context:Context3D, glTexture:GLTexture, optimize:Bool, width:Int, height:Int) {
 		
-		optimizeForRenderToTexture = optimize;
+		__optimizeForRenderToTexture = optimize;
 
-		mipmapsGenerated = false;
+		__mipmapsGenerated = false;
 		
-		if (internalFormat == -1){
+		if (__internalFormat == -1){
 			#if cpp
-			internalFormat = GL.BGRA_EXT;
+			__internalFormat = GL.BGRA_EXT;
 			#else
-			internalFormat = GL.RGBA;
+			__internalFormat = GL.RGBA;
 			#end
 		}
 		
 		#if (js || neko)
-		if (optimizeForRenderToTexture == null) optimizeForRenderToTexture = false;
+		if (__optimizeForRenderToTexture == null) __optimizeForRenderToTexture = false;
 		#end
 		
 		super (context, glTexture, width, height);
 		
 		#if (cpp || neko || nodejs)
-		if (optimizeForRenderToTexture) { 
+		if (__optimizeForRenderToTexture) { 
 			
 			GL.pixelStorei (GL.UNPACK_FLIP_Y_WEBGL, 1); 
 			GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.NEAREST);
@@ -120,7 +120,7 @@ using openfl.display.BitmapData;
 		
 		GL.bindTexture (GL.TEXTURE_2D, glTexture);
 		
-		if (optimizeForRenderToTexture) {
+		if (__optimizeForRenderToTexture) {
 			
 			GL.pixelStorei (GL.UNPACK_FLIP_Y_WEBGL, 1);
 			GL.texParameteri (GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.NEAREST);
@@ -130,7 +130,7 @@ using openfl.display.BitmapData;
 			
 		}
 		
-		GL.texImage2D (GL.TEXTURE_2D, miplevel, internalFormat, width, height, 0, internalFormat, GL.UNSIGNED_BYTE, data);
+		GL.texImage2D (GL.TEXTURE_2D, miplevel, __internalFormat, width, height, 0, __internalFormat, GL.UNSIGNED_BYTE, data);
 		GL.bindTexture (GL.TEXTURE_2D, null);
 		
 	}

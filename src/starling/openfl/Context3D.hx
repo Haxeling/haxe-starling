@@ -37,7 +37,10 @@ import openfl.Lib;
  * @author P.J.Shand
  */
 
-@:native("openfl.display3D.Context3D") class Context3D
+@:access(openfl.display3D)
+@:access(openfl.display3D.textures)
+@:native("openfl.display3D.Context3D")
+class Context3D
 {
 	private static var TEXTURE_MAX_ANISOTROPY_EXT = 0x84FE;
 	private static var MAX_SAMPLERS = 8;
@@ -118,7 +121,7 @@ import openfl.Lib;
 	}
 	
 	
-	public function clear (red:Float = 0, green:Float = 0, blue:Float = 0, alpha:Float = 1, depth:Float = 1, stencil:Int = 0, mask:Int = Context3DClearMask.ALL):Void {
+	public function clear (red:Float = 0, green:Float = 0, blue:Float = 0, alpha:Float = 1, depth:Float = 1, stencil:Int = 0, mask:Int = cast Context3DClearMask.ALL):Void {
 		
 		if (!drawing) {
 			
@@ -264,44 +267,44 @@ import openfl.Lib;
 	
 	public function __deleteTexture (texture:TextureBase):Void {
 		
-		if (texture.glTexture == null)
+		if (texture.__glTexture == null)
 			return;
 		texturesCreated.remove (texture);
-		GL.deleteTexture (texture.glTexture);
-		texture.glTexture = null;
+		GL.deleteTexture (texture.__glTexture);
+		texture.__glTexture = null;
 		
 	}
 	
 	
 	public function __deleteVertexBuffer (buffer:VertexBuffer3D):Void {
 		
-		if (buffer.glBuffer == null)
+		if (buffer.__glBuffer == null)
 			return;
 		vertexBuffersCreated.remove (buffer);
-		GL.deleteBuffer (buffer.glBuffer);
-		buffer.glBuffer = null;
+		GL.deleteBuffer (buffer.__glBuffer);
+		buffer.__glBuffer = null;
 		
 	}
 	
 	
 	public function __deleteIndexBuffer (buffer:IndexBuffer3D):Void {
 		
-		if (buffer.glBuffer == null)
+		if (buffer.__glBuffer == null)
 			return;
 		indexBuffersCreated.remove (buffer);
-		GL.deleteBuffer (buffer.glBuffer);
-		buffer.glBuffer = null;
+		GL.deleteBuffer (buffer.__glBuffer);
+		buffer.__glBuffer = null;
 		
 	}
 	
 	
 	public function __deleteProgram (program:Program3D):Void {
 		
-		if (program.glProgram == null)
+		if (program.__glProgram == null)
 			return;
 		programsCreated.remove (program);
-		GL.deleteProgram (program.glProgram);
-		program.glProgram = null;
+		GL.deleteProgram (program.__glProgram);
+		program.__glProgram = null;
 		
 	}
 	
@@ -373,7 +376,7 @@ import openfl.Lib;
 	
 	public function drawTriangles (indexBuffer:IndexBuffer3D, firstIndex:Int = 0, numTriangles:Int = -1):Void {
 		
-		var location:GLUniformLocation = GL.getUniformLocation (currentProgram.glProgram, "yflip");
+		var location:GLUniformLocation = GL.getUniformLocation (currentProgram.__glProgram, "yflip");
 		GL.uniform1f (location, this._yFlip);
 
 		if (!drawing) {
@@ -386,7 +389,7 @@ import openfl.Lib;
 		
 		if (numTriangles == -1) {
 			
-			numIndices = indexBuffer.numIndices;
+			numIndices = indexBuffer.__numIndices;
 			
 		} else {
 			
@@ -396,7 +399,7 @@ import openfl.Lib;
 		
 		var byteOffset = firstIndex * 2;
 		
-		GL.bindBuffer (GL.ELEMENT_ARRAY_BUFFER, indexBuffer.glBuffer);
+		GL.bindBuffer (GL.ELEMENT_ARRAY_BUFFER, indexBuffer.__glBuffer);
 		GL.drawElements (GL.TRIANGLES, numIndices, GL.UNSIGNED_SHORT, byteOffset);
 		
 	}
@@ -457,7 +460,7 @@ import openfl.Lib;
 		
 		// TODO: Type as Context3DTriangleFace instead of Int?
 		
-		if (triangleFaceToCull == Context3DTriangleFace.NONE) {
+		if (triangleFaceToCull == cast Context3DTriangleFace.NONE) {
 			
 			GL.disable (GL.CULL_FACE);
 			
@@ -515,7 +518,7 @@ import openfl.Lib;
 	public function setGLSLProgramConstantsFromByteArray (locationName:String, data:ByteArray, byteArrayOffset:Int = 0):Void {
 		
 		data.position = byteArrayOffset;
-		var location = GL.getUniformLocation (currentProgram.glProgram, locationName);
+		var location = GL.getUniformLocation (currentProgram.__glProgram, locationName);
 		GL.uniform4f (location, data.readFloat (), data.readFloat (), data.readFloat (), data.readFloat ());
 		
 	}
@@ -523,7 +526,7 @@ import openfl.Lib;
 	
 	public function setGLSLProgramConstantsFromMatrix (locationName:String, matrix:Matrix3D, transposedMatrix:Bool = false):Void {
 		
-		var location = GL.getUniformLocation (currentProgram.glProgram, locationName);
+		var location = GL.getUniformLocation (currentProgram.__glProgram, locationName);
 		GL.uniformMatrix4fv (location, !transposedMatrix, new Float32Array (matrix.rawData));
 		
 	}
@@ -531,7 +534,7 @@ import openfl.Lib;
 	
 	public function setGLSLProgramConstantsFromVector4 (locationName:String, data:Array<Float>, startIndex:Int = 0):Void {
 		
-		var location = GL.getUniformLocation (currentProgram.glProgram, locationName);
+		var location = GL.getUniformLocation (currentProgram.__glProgram, locationName);
 		GL.uniform4f (location, data[startIndex], data[startIndex + 1], data[startIndex + 2], data[startIndex + 3]);
 		
 	}
@@ -562,21 +565,21 @@ import openfl.Lib;
 			
 		} 
 		
-		var location = GL.getUniformLocation (currentProgram.glProgram, locationName);
+		var location = GL.getUniformLocation (currentProgram.__glProgram, locationName);
 		
 		if (Std.is (texture, Texture)) {
 			
-			GL.bindTexture (GL.TEXTURE_2D, cast (texture, Texture).glTexture);
+			GL.bindTexture (GL.TEXTURE_2D, cast (texture, Texture).__glTexture);
 			GL.uniform1i (location, textureIndex);
 			
 		} else if (Std.is (texture, RectangleTexture)) {
 			
-			GL.bindTexture (GL.TEXTURE_2D, cast (texture, RectangleTexture).glTexture);
+			GL.bindTexture (GL.TEXTURE_2D, cast (texture, RectangleTexture).__glTexture);
 			GL.uniform1i (location, textureIndex);
 			
 		} else if (Std.is (texture, CubeTexture) ) {
 			
-			GL.bindTexture (GL.TEXTURE_CUBE_MAP, cast (texture, CubeTexture).glTexture );
+			GL.bindTexture (GL.TEXTURE_CUBE_MAP, cast (texture, CubeTexture).__glTexture );
 			GL.uniform1i (location, textureIndex);
 			
 		} else {
@@ -602,7 +605,7 @@ import openfl.Lib;
 	
 	public function setGLSLVertexBufferAt (locationName, buffer:VertexBuffer3D, bufferOffset:Int = 0, ?format:Context3DVertexBufferFormat):Void {
 		
-		var location = (currentProgram != null && currentProgram.glProgram != null) ? GL.getAttribLocation (currentProgram.glProgram, locationName) : -1;
+		var location = (currentProgram != null && currentProgram.__glProgram != null) ? GL.getAttribLocation (currentProgram.__glProgram, locationName) : -1;
 		if (location == -1) return;
 		
 		if (buffer == null) {
@@ -621,7 +624,7 @@ import openfl.Lib;
 			
 		}
 		
-		GL.bindBuffer (GL.ARRAY_BUFFER, buffer.glBuffer);
+		GL.bindBuffer (GL.ARRAY_BUFFER, buffer.__glBuffer);
 		
 		var dimension = 4;
 		var type = GL.FLOAT;
@@ -664,7 +667,7 @@ import openfl.Lib;
 		}
 		
 		GL.enableVertexAttribArray (location);
-		GL.vertexAttribPointer (location, dimension, type, false, buffer.data32PerVertex * numBytes, bufferOffset * numBytes);
+		GL.vertexAttribPointer (location, dimension, type, false, buffer.__data32PerVertex * numBytes, bufferOffset * numBytes);
 		
 	}
 	
@@ -675,7 +678,7 @@ import openfl.Lib;
 		
 		if (program3D != null) {
 			
-			glProgram = program3D.glProgram;
+			glProgram = program3D.__glProgram;
 			
 		}
 
@@ -792,13 +795,13 @@ import openfl.Lib;
 		#if (ios || tvos)
 		GL.renderbufferStorage (GL.RENDERBUFFER, 0x88F0, texture.width, texture.height);
 		#elseif js
-		if (enableDepthAndStencil) GL.renderbufferStorage (GL.RENDERBUFFER, GL.DEPTH_STENCIL, texture.width, texture.height);
+		if (enableDepthAndStencil) GL.renderbufferStorage (GL.RENDERBUFFER, GL.DEPTH_STENCIL, texture.__width, texture.__height);
 		#else
 		GL.renderbufferStorage (GL.RENDERBUFFER, GL.RGBA, texture.width, texture.height);
 		#end
-		GL.framebufferTexture2D (GL.FRAMEBUFFER, GL.COLOR_ATTACHMENT0, GL.TEXTURE_2D, texture.glTexture, 0);
+		GL.framebufferTexture2D (GL.FRAMEBUFFER, GL.COLOR_ATTACHMENT0, GL.TEXTURE_2D, texture.__glTexture, 0);
 
-		GL.renderbufferStorage (GL.RENDERBUFFER, GL.DEPTH_STENCIL, texture.width, texture.height);
+		GL.renderbufferStorage (GL.RENDERBUFFER, GL.DEPTH_STENCIL, texture.__width, texture.__height);
 		GL.framebufferRenderbuffer (GL.FRAMEBUFFER, GL.DEPTH_STENCIL_ATTACHMENT, GL.RENDERBUFFER, renderbuffer);
 		
 		if (enableDepthAndStencil) {
@@ -807,17 +810,17 @@ import openfl.Lib;
 			GL.enable (GL.STENCIL_TEST);
 		}
 		
-		GL.bindTexture (GL.TEXTURE_2D, texture.glTexture);
-		GL.texImage2D (GL.TEXTURE_2D, 0, GL.RGBA, texture.width, texture.height, 0, GL.RGBA, GL.UNSIGNED_BYTE, null);
+		GL.bindTexture (GL.TEXTURE_2D, texture.__glTexture);
+		GL.texImage2D (GL.TEXTURE_2D, 0, GL.RGBA, texture.__width, texture.__height, 0, GL.RGBA, GL.UNSIGNED_BYTE, null);
 		GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.LINEAR);
 		GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR_MIPMAP_NEAREST);
 		
-		GL.viewport (0, 0, texture.width, texture.height);
+		GL.viewport (0, 0, texture.__width, texture.__height);
 		
 		renderToTexture = true;
 		rttDepthAndStencil = enableDepthAndStencil;
-		rttWidth = texture.width;
-		rttHeight = texture.height;
+		rttWidth = texture.__width;
+		rttHeight = texture.__height;
 		
 		//updateScissorRectangle();
 		//updateDepthAndStencilState();
@@ -878,9 +881,9 @@ import openfl.Lib;
 	
 	public function setStencilActions (?triangleFace:Int, ?compareMode:Int, ?actionOnBothPass:Int, ?actionOnDepthFail:Int, ?actionOnDepthPassStencilFail:Int):Void {
 		
-		this.stencilCompareMode = compareMode;
+		this.stencilCompareMode = cast compareMode;
 		GL.stencilOp (actionOnBothPass, actionOnDepthFail, actionOnDepthPassStencilFail);
-		GL.stencilFunc (stencilCompareMode, stencilRef, stencilReadMask);
+		GL.stencilFunc (cast stencilCompareMode, stencilRef, stencilReadMask);
 		
 	}
 	
@@ -890,7 +893,7 @@ import openfl.Lib;
 		stencilReadMask = readMask;
 		stencilRef = referenceValue;
 		
-		GL.stencilFunc (stencilCompareMode, stencilRef, stencilReadMask);
+		GL.stencilFunc (cast stencilCompareMode, stencilRef, stencilReadMask);
 		GL.stencilMask (writeMask);
 		
 	}
@@ -939,7 +942,8 @@ import openfl.Lib;
 		
 		if (Std.is (texture, Texture)) {
 			
-			switch (wrap) {
+			var wrap2:Int = cast wrap;
+			switch (wrap2) {
 				
 				case Context3DWrapMode.CLAMP:
 					
@@ -1009,9 +1013,9 @@ import openfl.Lib;
 			} 
 
 			var tex:Texture = cast texture;
-			if (mipfilter != Context3DMipFilter.MIPNONE && !tex.mipmapsGenerated) {
+			if (mipfilter != Context3DMipFilter.MIPNONE && !tex.__mipmapsGenerated) {
 				GL.generateMipmap (GL.TEXTURE_2D);
-				tex.mipmapsGenerated = true;
+				tex.__mipmapsGenerated = true;
 			}
 					
 			
@@ -1060,7 +1064,8 @@ import openfl.Lib;
 			
 		} else if (Std.is (texture, CubeTexture)) {
 			
-			switch (wrap) {
+			var wrap2:Int = cast wrap;
+			switch (wrap2) {
 				
 				case Context3DWrapMode.CLAMP:
 					
@@ -1127,9 +1132,9 @@ import openfl.Lib;
 			}
 			
 			var cubetex:CubeTexture = cast texture;
-			if (mipfilter != Context3DMipFilter.MIPNONE && !cubetex.mipmapsGenerated) {
+			if (mipfilter != Context3DMipFilter.MIPNONE && !cubetex.__mipmapsGenerated) {
 				GL.generateMipmap (GL.TEXTURE_CUBE_MAP);
-				cubetex.mipmapsGenerated = true;
+				cubetex.__mipmapsGenerated = true;
 			}
 
 		} else {

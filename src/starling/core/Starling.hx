@@ -585,8 +585,8 @@ class Starling extends EventDispatcher
 		var scaleX:Float = mViewPort.width  / mStage.stageWidth;
 		var scaleY:Float = mViewPort.height / mStage.stageHeight;
 		
-		mContext.setDepthTest(false, Context3DCompareMode.ALWAYS);
-		mContext.setCulling(Context3DTriangleFace.NONE);
+		mContext.setDepthTest(false, cast Context3DCompareMode.ALWAYS);
+		mContext.setCulling(cast Context3DTriangleFace.NONE);
 		
 		//mContext.setStencilReferenceValue(0);
 		
@@ -1287,7 +1287,7 @@ class Starling extends EventDispatcher
 
 typedef StarlingFunction = Dynamic;
 
-typedef Context3D = starling.openfl.Context3D;
+//typedef Context3D = starling.openfl.Context3D;
 typedef AGLSLParser = starling.openfl.AGLSLParser;
 typedef Mapping = starling.openfl.Mapping;
 //typedef Mapping = starling.openfl.Context3DProfile;
