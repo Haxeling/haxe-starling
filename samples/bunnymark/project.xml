@@ -15,10 +15,11 @@
 		hardware="true" 
 		allow-shaders="true" 
 		require-shaders="true" 
-		depth-buffer="false" 
+		depth-buffer="true" 
 		stencil-buffer="true" 
 		background="0x333333"
 	/>
+	
 	<window width="0" height="0" if="html5" />
 	
 	<!-- classpath, haxe libs -->
