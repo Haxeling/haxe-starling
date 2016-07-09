@@ -9,9 +9,8 @@
 // =================================================================================================
 
 package starling.core;
-
 import openfl.display3D.Context3DBlendFactor;
-import openfl.utils.AGALMiniAssembler;
+import openfl.display3D._shaders.AGLSLShaderUtils;
 import openfl.display3D.Context3DProfile;
 import openfl.Vector;
 
@@ -85,7 +84,6 @@ class RenderSupport
     private static var sMatrix3D:Matrix3D = new Matrix3D();
     private static var sMatrixData = new Vector<Float>();
     
-	private static var assembler = new AGALMiniAssembler();
     // construction
     
     /** Creates a new RenderSupport object with an empty matrix stack. */
@@ -739,10 +737,9 @@ class RenderSupport
             resultProgram = context.createProgram();
         }
         
-		resultProgram.upload(
-            assembler.assemble(cast Context3DProgramType.VERTEX, vertexShader),
-           assembler.assemble(cast Context3DProgramType.FRAGMENT, fragmentShader)
-		);
+        resultProgram.upload(
+            AGLSLShaderUtils.createShader(Context3DProgramType.VERTEX, vertexShader),
+            AGLSLShaderUtils.createShader(Context3DProgramType.FRAGMENT, fragmentShader));
         
         return resultProgram;
     }

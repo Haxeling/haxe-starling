@@ -29,8 +29,6 @@ import starling.events.Event;
 import starling.textures.RenderTexture;
 import starling.utils.AssetManager;
 
-import utils.ProgressBar;
-
 /**
  * ...
  * @author P.J.Shand

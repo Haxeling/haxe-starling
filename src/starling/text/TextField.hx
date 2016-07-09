@@ -153,8 +153,7 @@ class TextField extends DisplayObjectContainer
 	public var nativeFilters(get, set):Array<BitmapFilter>;
 	private var isHtmlText(get, set):Bool;
 	public static var defaultTextureFormat(get, set):Context3DTextureFormat;
-	private static var bitmapFonts(get, null):Map<String, BitmapFont>;
-	
+	private static var fontFamilys = new Map<String, FontFamily>();
 	
 	
 	
@@ -475,7 +474,7 @@ class TextField extends DisplayObjectContainer
 		else
 			mQuadBatch.reset();
 		
-		var bitmapFont:BitmapFont = getBitmapFont(mFontName);
+		var bitmapFont:BitmapFont = getBitmapFont(mFontName, fontSize);
 		
 		if(leading != null)
 			bitmapFont.lineHeight = mLeading;			
@@ -630,12 +629,12 @@ class TextField extends DisplayObjectContainer
 	{
 		if (mFontName != value)
 		{
-			if (value == BitmapFont.MINI && bitmapFonts[value] == null)
-				registerBitmapFont(new BitmapFont());
+			if (value == BitmapFont.MINI && fontFamilys[value] == null)
+				registerBitmapFont(new BitmapFont(), fontSize);
 			
 			mFontName = value;
 			mRequiresRedraw = true;
-			mIsRenderedText = getBitmapFont(value) == null;
+			mIsRenderedText = getBitmapFont(value, fontSize) == null;
 		}
 		return value;
 	}
@@ -885,46 +884,53 @@ class TextField extends DisplayObjectContainer
 	 *  The font is identified by its <code>name</code> (not case sensitive).
 	 *  Per default, the <code>name</code> property of the bitmap font will be used, but you 
 	 *  can pass a custom name, as well. @return the name of the font. */
-	public static function registerBitmapFont(bitmapFont:BitmapFont, name:String=null):String
+	public static function registerBitmapFont(bitmapFont:BitmapFont, name:String=null, size:Null<Float> = null):String
 	{
 		if (name == null) name = bitmapFont.name;
-		bitmapFonts[name.toLowerCase()] = bitmapFont;
+		name = name.toLowerCase();
+		if (!fontFamilys.exists(name)) {
+			fontFamilys[name] = new FontFamily();
+		}
+		fontFamilys[name].add(bitmapFont, size);
 		return name;
 	}
 	
 	/** Unregisters the bitmap font and, optionally, disposes it. */
-	public static function unregisterBitmapFont(name:String, dispose:Bool=true):Void
+	public static function unregisterBitmapFont(name:String, dispose:Bool=true, size:Null<Float> = null):Void
 	{
 		name = name.toLowerCase();
 		
-		if (dispose && bitmapFonts[name] != null)
-			bitmapFonts[name].dispose();
-		
-		bitmapFonts.remove(name);
+		if (dispose) {
+			if (!fontFamilys.exists(name)) fontFamilys[name].remove(size);
+			fontFamilys[name].remove(size);
+		}
 	}
 	
 	/** Returns a registered bitmap font (or null, if the font has not been registered). 
 	 *  The name is not case sensitive. */
-	public static function getBitmapFont(name:String):BitmapFont
+	public static function getBitmapFont(name:String, size:Null<Float> = null):BitmapFont
 	{
-		return bitmapFonts[name.toLowerCase()];
+		name = name.toLowerCase();
+		var fontFamily:FontFamily = fontFamilys[name];
+		if (fontFamily == null) return null;
+		return fontFamily.closest(size);
 	}
 	
 	public function charIdAt(location:Point):Int
 	{
-		var bitmapFont:BitmapFont = getBitmapFont(mFontName);		
+		var bitmapFont:BitmapFont = getBitmapFont(mFontName, this.fontSize);		
 		return bitmapFont.getCharIdAtPoint( location );
 	}
 	
 	public function getCharPos(id:Int):Point
 	{
-		var bitmapFont:BitmapFont = getBitmapFont(mFontName);		
+		var bitmapFont:BitmapFont = getBitmapFont(mFontName, this.fontSize);		
 		return bitmapFont.getCharPosition( id );
 	}
 	
 	/** Stores the currently available bitmap fonts. Since a bitmap font will only work
 	 *  in one Stage3D context, they are saved in Starling's 'contextData' property. */
-	private static function get_bitmapFonts():Map<String, BitmapFont>
+	/*private static function get_bitmapFonts():Map<String, BitmapFont>
 	{
 		var fonts:Map<String, BitmapFont> = cast Starling.current.contextData[BITMAP_FONT_DATA_NAME];
 		
@@ -935,5 +941,58 @@ class TextField extends DisplayObjectContainer
 		}
 		
 		return fonts;
+	}*/
+}
+
+class FontFamily
+{
+	public var sizes:Array<BitmapFont> = [];
+	public var noSize:BitmapFont;
+	
+	public function new() { }
+
+	public function add(font:BitmapFont, size:Null<Float>=null):Void
+	{
+		if (size == null) {
+			noSize = font;
+			return;
+		}
+		for (i in 0...sizes.length) 
+		{
+			if (sizes[i].size == size) return; 
+		}
+		sizes.push(font);
+	}
+	
+	public function remove(size:Null<Float>=null):Void
+	{
+		if (size == null) {
+			noSize = null;
+			return;
+		}
+		for (i in 0...sizes.length) 
+		{
+			if (sizes[i].size == size) {
+				sizes.splice(i, 1);
+				return; 
+			}
+		}
+	}
+	
+	public function closest(size:Null<Float>=null):BitmapFont
+	{
+		if (size == null) return noSize;
+		
+		if (sizes.length == 0) return null;
+		var index:Int = 0;
+		var dif:Float = Math.POSITIVE_INFINITY;
+		for (i in 0...sizes.length) 
+		{
+			if (dif > Math.abs(sizes[i].size - size)) {
+				dif = Math.abs(sizes[i].size - size);
+				index = i;
+			}
+		}
+		return sizes[index];
 	}
 }

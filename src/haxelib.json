@@ -4,8 +4,8 @@
 	"license": "MIT",
 	"tags": [ "starling", "2d", "gpu", "openfl", "flash", "air", "js", "web", "cpp" ],
 	"description": "GPU powered 2D rendering engine which mimics the conventional Flash display list architecture",
-	"version": "0.6.0",
-	"releasenote": "Updates for Haxe 3.3, OpenFl 3.6.1 and Lime 2.9.1",
+	"version": "0.5.7",
+	"releasenote": "supportsCursor html5 target fix",
 	"contributors": [ "p.j.shand", "tbyrne" ],
 	"dependencies": {
 		
