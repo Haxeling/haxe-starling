@@ -670,9 +670,6 @@ class TextField extends DisplayObjectContainer
 	private function get_hAlign():HAlign { return mHAlign; }
 	private function set_hAlign(value:HAlign):HAlign
 	{
-		if (!Std.is(value, HAlign))
-			throw new ArgumentError("Invalid horizontal align: " + value);
-		
 		if (mHAlign != value)
 		{
 			mHAlign = value;
@@ -685,9 +682,6 @@ class TextField extends DisplayObjectContainer
 	private function get_vAlign():VAlign { return mVAlign; }
 	private function set_vAlign(value:VAlign):VAlign
 	{
-		if (!Std.is(value, VAlign))
-			throw new ArgumentError("Invalid vertical align: " + value);
-		
 		if (mVAlign != value)
 		{
 			mVAlign = value;

@@ -16,23 +16,25 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\_sdks\haxe\lib\openfl\3,6,1" />
-    <class path="C:\_sdks\haxe\lib\lime\2,9,0" />
+    <class path="C:\_sdks\haxe\lib\openfl\4,0,0" />
+    <class path="C:\_sdks\haxe\lib\lime\3,0,0" />
     <class path="C:\_sdks\haxe\lib\actuate\1,8,6" />
     <class path="C:\_sdks\haxe\lib\format\3,2,1" />
     <class path="src" />
     <class path="..\..\src" />
-    <class path="C:\_sdks\haxe\lib\openfl\3,6,1\extern" />
-    <class path="bin\windows\cpp\haxe" />
+    <class path="C:\_sdks\haxe\lib\openfl\4,0,0\externs\core\flash" />
+    <class path="C:\_sdks\haxe\lib\openfl\4,0,0\externs\core\openfl" />
+    <class path="C:\_sdks\haxe\lib\openfl\4,0,0\externs\extras" />
+    <class path="bin\flash\release\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="openfl=3.6.1&#xA;lime=2.9.0&#xA;actuate=1.8.6&#xA;format=3.2.1&#xA;openfl-next&#xA;tools=2.9.0&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;openfl-native&#xA;windows&#xA;desktop&#xA;display" />
+    <option directives="openfl=4.0.0&#xA;lime=3.0.0&#xA;actuate=1.8.6&#xA;format=3.2.1&#xA;tools=3.0.0&#xA;no-compilation&#xA;openfl-flash&#xA;web&#xA;advanced-telemetry&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="--remap flash:openfl&#xA;-dce std&#xA;#--macro keep(&quot;sample.Main&quot;)" />
+    <option additional="-dce std&#xA;-swf-version 17" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

@@ -17,10 +17,10 @@ class HAlign
 
 package starling.utils;
 
-enum HAlign {
-	
-	LEFT;
-	RIGHT;
-	CENTER;
-	JUSTIFY;
+@:enum abstract HAlign(String) from String to String
+{
+	var LEFT = "left";
+	var RIGHT = "right";
+	var CENTER = "center";
+	var JUSTIFY = "justify";
 }
