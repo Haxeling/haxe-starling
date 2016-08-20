@@ -1,7 +1,7 @@
 # Haxeling (Starling for Haxe)
 ===============
 
-## Warning: this version of Starling is currently only compatible with OpenFL 3.6 & Lime 2.9
+## Warning: Currently only compatible with OpenFL 3.6 & Lime 2.9
 
 [Read more] (http://blog.peteshand.net/starling-for-haxe/)
 
