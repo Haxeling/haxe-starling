@@ -297,8 +297,8 @@ class VertexData
 	{
 		var offset:Int = vertexID * VertexData.ELEMENTS_PER_VERTEX + VertexData.TEXCOORD_OFFSET;
 		
-		texCoords.x = Std.int(mRawData[offset]);
-		texCoords.y = Std.int(mRawData[Std.int(offset + 1)]);
+		texCoords.x = mRawData[offset];
+		texCoords.y = mRawData[Std.int(offset + 1)];
 		
 		/*#if js
 		untyped __js__('if ("undefined" === typeof texCoords.x) texCoords.x = 0;');
