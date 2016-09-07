@@ -10,9 +10,11 @@
 
 package starling.textures;
 
+import openfl.display3D.Context3D;
 import openfl.display3D.Context3DTextureFormat;
 import openfl.display3D.textures.TextureBase;
 import openfl.errors.ArgumentError;
+import starling.core.Starling;
 
 /** A concrete texture that may only be used for a 'VideoTexture' base.
  *  For internal use only. */
@@ -40,6 +42,19 @@ class ConcreteVideoTexture extends ConcreteTexture
 		if (name != "flash.display3D.textures.VideoTexture") {
 			throw new ArgumentError("'base' must be VideoTexture");
 		}
+	}
+	
+	override function createBase():Void 
+	{
+		var context:Context3D = Starling.current.context;
+		var func:Dynamic = Reflect.getProperty(context, "createVideoTexture");
+		mBase = Reflect.callMethod(context, func, []);
+		mDataUploaded = false;
+	}
+	
+	override public function clear(color:UInt=0x0, alpha:Float=0.0):Void
+	{
+		// Can't clear video textures
 	}
 
 	/** The actual width of the video in pixels. */

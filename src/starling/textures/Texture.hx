@@ -399,6 +399,7 @@ class Texture
 		
 		var func:Dynamic = Reflect.getProperty(context, "createVideoTexture");
 		var base:TextureBase = Reflect.callMethod(context, func, []); // var base:TextureBase = context["createVideoTexture"]();
+		base.addEventListener(TEXTURE_READY, OnTextureReady);
 		var baseFunc:Dynamic = Reflect.getProperty(base, "attach" + type);
 		Reflect.callMethod(base, baseFunc, [attachment]); // base["attach" + type](attachment);
 		
@@ -411,7 +412,6 @@ class Texture
 		onCompleteLookup.set(base, onComplete);
 		textureLookup.set(base, texture);
 		
-		base.addEventListener(TEXTURE_READY, OnTextureReady);
 		
 		return texture;
 	}
