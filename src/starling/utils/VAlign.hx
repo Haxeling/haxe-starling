@@ -37,9 +37,9 @@
 
 package starling.utils;
 
-enum VAlign {
-	
-	TOP;
-	CENTER;
-	BOTTOM;
+@:enum abstract VAlign(String) from String to String
+{
+	var TOP = "top";
+	var CENTER = "center";
+	var BOTTOM = "bottom";
 }
