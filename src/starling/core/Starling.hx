@@ -440,7 +440,7 @@ class Starling extends EventDispatcher
 	{
 		currentProfile = profiles.shift();
 		try {
-			StarlingUtils.execute(mStage3D.requestContext3D, [tempRenderMode/*, currentProfile*/]);
+			StarlingUtils.execute(mStage3D.requestContext3D, [tempRenderMode, currentProfile]);
 		}
 		catch (error:Error)
 		{
