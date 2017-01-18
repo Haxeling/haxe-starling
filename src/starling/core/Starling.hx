@@ -1294,5 +1294,5 @@ typedef Mapping = openfl._internal.aglsl.Mapping;
 
 
 #if cpp
-typedef Texture = openfl.display3D.Texture;
+typedef Texture = openfl.display3D.textures.Texture;
 #end
