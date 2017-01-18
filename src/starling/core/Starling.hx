@@ -1287,12 +1287,12 @@ class Starling extends EventDispatcher
 
 typedef StarlingFunction = Dynamic;
 
-typedef Context3D = starling.openfl.Context3D;
-typedef AGLSLParser = starling.openfl.AGLSLParser;
-typedef Mapping = starling.openfl.Mapping;
-//typedef Mapping = starling.openfl.Context3DProfile;
+typedef Context3D = openfl.display3D.Context3D;
+typedef AGLSLParser = openfl._internal.aglsl.AGLSLParser;
+typedef Mapping = openfl._internal.aglsl.Mapping;
+//typedef Mapping = openfl.display3D.Context3DProfile;
 
 
 #if cpp
-typedef Texture = starling.openfl.Texture;
+typedef Texture = openfl.display3D.Texture;
 #end
