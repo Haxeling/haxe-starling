@@ -506,7 +506,7 @@ class Starling extends EventDispatcher
 		makeCurrent();
 		
 		initializeGraphicsAPI();
-		Timer.delay(initializeRoot, 1);
+		initializeRoot();
 		
 		mTouchProcessor.simulateMultitouch = mSimulateMultitouch;
 		mLastFrameTimestamp = Lib.getTimer() / 1000.0;
@@ -1161,7 +1161,7 @@ class Starling extends EventDispatcher
 		else if (mRootClass == null)
 		{
 			mRootClass = value;
-			if (mContext != null) Timer.delay(initializeRoot, 1);
+			if (mContext != null) initializeRoot();
 		}
 		return value;
 	}
