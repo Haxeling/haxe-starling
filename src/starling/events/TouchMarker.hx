@@ -41,14 +41,17 @@ class TouchMarker extends Sprite
 		mCenter = new Point();
 		mTexture = createTexture();
 		
-		for (i in 0...2)
-		{
-			var marker:Image = new Image(mTexture);
-			marker.pivotX = mTexture.width / 2;
-			marker.pivotY = mTexture.height / 2;
-			marker.touchable = false;
-			addChild(marker);
-		}
+		var marker1:Image = new Image(mTexture);
+		marker1.pivotX = mTexture.width / 2;
+		marker1.pivotY = mTexture.height / 2;
+		marker1.touchable = false;
+		addChild(marker1);
+
+		var marker2:Image = new Image(mTexture);
+		marker2.pivotX = mTexture.width / 2;
+		marker2.pivotY = mTexture.height / 2;
+		marker2.touchable = false;
+		addChild(marker2);
 	}
 	
 	public override function dispose():Void

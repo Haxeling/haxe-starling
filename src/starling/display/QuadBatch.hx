@@ -554,7 +554,6 @@ class QuadBatch extends DisplayObject
 		if (Std.is(object, Sprite3D))
 			throw new IllegalOperationError("Sprite3D objects cannot be flattened");
 
-		var i:Int;
 		var quadBatch:QuadBatch;
 		var isRootObject:Bool = false;
 		var objectAlpha:Float = object.alpha;
@@ -670,9 +669,10 @@ class QuadBatch extends DisplayObject
 			/*for (i=quadBatches.length-1; i>quadBatchID; --i) {
 				quadBatches.pop().dispose();
 			}*/
-			for (j in (quadBatchID+1)...quadBatches.length) 
+			var j = quadBatchID+1;
+			while (j < quadBatches.length)
 			{
-				var i = quadBatches.length - j - 1;
+				++j;
 				quadBatches.pop().dispose();
 			}
 		}

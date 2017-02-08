@@ -707,7 +707,9 @@ class TextField extends DisplayObjectContainer
 			mBorder = new Sprite();
 			addChild(mBorder);
 			
-			for (i in 0...4)
+			mBorder.addChild(new Quad(1.0, 1.0));
+			mBorder.addChild(new Quad(1.0, 1.0));
+			mBorder.addChild(new Quad(1.0, 1.0));
 				mBorder.addChild(new Quad(1.0, 1.0));
 			
 			updateBorder();

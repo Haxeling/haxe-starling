@@ -528,14 +528,9 @@ class BitmapFont
 		{
 			for (lineID in 0...numLines)
 			{
-				var str:String = "";
 				var line:Array<CharLocation> = sLines[lineID];
 				numChars = line.length;
-				for (c in 0...numChars)
-				{
-					charLocation = line[c];
-					str += String.fromCharCode( charLocation.char.charID );
-				}
+				charLocation = line[numChars-1];
 			}
 		}
 		for (lineID in 0...numLines)

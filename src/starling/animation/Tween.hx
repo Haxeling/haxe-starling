@@ -204,7 +204,6 @@ class Tween extends EventDispatcher implements IAnimatable
 	{
 		if (time == 0 || (mRepeatCount == 1 && mCurrentTime == mTotalTime)) return;
 		
-		var i:Int;
 		var previousTime:Float = mCurrentTime;
 		var restTime:Float = mTotalTime - mCurrentTime;
 		var carryOverTime:Float = time > restTime ? time - restTime : 0.0;
