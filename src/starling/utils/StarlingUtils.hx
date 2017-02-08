@@ -36,9 +36,6 @@ class StarlingUtils
     {
 		if (func != null)
         {
-			var i:Int;
-			var length:Int = Reflect.getProperty(func, "length");
-			
 			#if flash
 				var maxNumArgs:Int = func.length;
 			#else 

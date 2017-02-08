@@ -421,7 +421,6 @@ class Starling extends EventDispatcher
 		currentProfile = null;
 		trace(profile);
 		trace(Type.getClass(profile));
-		var type:Class<Dynamic> = Type.getClass(profile);
 		
 		if (profile == null) {
 			profiles = [Context3DProfile.BASELINE_EXTENDED, Context3DProfile.BASELINE_EXTENDED, Context3DProfile.BASELINE, Context3DProfile.BASELINE_CONSTRAINED];
@@ -460,15 +459,15 @@ class Starling extends EventDispatcher
 			cast Context3DStencilAction.DECREMENT_SATURATE
 		);
 		
-		var renderModeStr:String = "";
 		
+		//var renderModeStr:String = "";
 		//if (tempRenderMode == Context3DRenderMode.AUTO) renderModeStr = "auto";
 		//else if (tempRenderMode == Context3DRenderMode.SOFTWARE) renderModeStr = "software";
 		
-		var auto:String = "auto";
+		/*var auto:String = "auto";
 		#if js
 			auto = Context3DRenderMode.AUTO.getName();
-		#end
+		#end*/
 		if (tempRenderMode == null && profiles.length != 0 && context.driverInfo.indexOf("Software") != -1)
 		{
 			onError(event);

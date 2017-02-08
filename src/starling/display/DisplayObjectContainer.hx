@@ -207,7 +207,9 @@ class DisplayObjectContainer extends DisplayObject
 		if (endIndex < 0 || endIndex > numChildren) 
 			endIndex = numChildren;
 		
-		for (i in beginIndex...endIndex)
+		var i = beginIndex;
+		while (i < endIndex)
+			++i;
 			removeChildAt(beginIndex, dispose);
 	}
 
@@ -369,7 +371,6 @@ class DisplayObjectContainer extends DisplayObject
 		var numChildren:Int = mChildren.length;
 		var blendMode:String = support.blendMode;
 		
-		var i:Int = 0;
 		for (i in 0 ... numChildren)
 		{
 			var child:DisplayObject = mChildren[i];
@@ -468,7 +469,6 @@ class DisplayObjectContainer extends DisplayObject
 		if (length <= 1) return;
 		else
 		{
-			var i:Int = 0;
 			var endIndex:Int = startIndex + length;
 			var halfLength:Int = cast length / 2;
 			var l:Int = startIndex;              // current position in the left subvector

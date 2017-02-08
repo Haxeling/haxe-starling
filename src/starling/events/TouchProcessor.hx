@@ -106,7 +106,6 @@ class TouchProcessor
 	 *  the queue while doing so. This method is called by Starling once per frame. */
 	public function advanceTime(passedTime:Float):Void
 	{
-		var i:Int;
 		var touch:Touch;
 		
 		mElapsedTime += passedTime;
@@ -177,7 +176,6 @@ class TouchProcessor
 		// the same touch event will be dispatched to all targets;
 		// the 'dispatch' method will make sure each bubble target is visited only once.
 		var touchEvent:TouchEvent = new TouchEvent(TouchEvent.TOUCH, mCurrentTouches, shiftDown, ctrlDown);
-		var touch:Touch;
 		
 		// hit test our updated touches
 		for (touch in touches)

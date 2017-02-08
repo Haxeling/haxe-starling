@@ -327,8 +327,10 @@ class VertexData
 		var x:Float, y:Float;
 		var offset:Int = vertexID * VertexData.ELEMENTS_PER_VERTEX + VertexData.POSITION_OFFSET;
 		
-		for (i in 0...numVertices)
+		var i = 0;
+		while (i < numVertices)
 		{
+			++i;
 			x = mRawData[offset];
 			y = mRawData[Std.int(offset+1)];
 			
@@ -360,8 +362,6 @@ class VertexData
 		if (numVertices < 0 || vertexID + numVertices > mNumVertices)
 			numVertices = mNumVertices - vertexID;
 		 
-		var i:Int;
-		
 		if (mPremultipliedAlpha)
 		{
 			for (i in 0...numVertices)
@@ -404,12 +404,14 @@ class VertexData
 			var minY:Float = Math.POSITIVE_INFINITY;
 			var maxY:Float = Math.NEGATIVE_INFINITY;
 			var offset:Int = vertexID * VertexData.ELEMENTS_PER_VERTEX + VertexData.POSITION_OFFSET;
-			var x:Float, y:Float, i:Int;
+			var x:Float, y:Float;
 			
 			if (transformationMatrix == null)
 			{
-				for (i in 0...numVertices)
+				var i = 0;
+				while (i < numVertices)
 				{
+					++i;
 					x = mRawData[offset];
 					y = mRawData[Std.int(offset+1)];
 					offset += VertexData.ELEMENTS_PER_VERTEX;
@@ -422,8 +424,10 @@ class VertexData
 			}
 			else
 			{
-				for (i in 0...numVertices)
+				var i = 0;
+				while (i < numVertices)
 				{
+					++i;
 					x = mRawData[offset];
 					y = mRawData[Std.int(offset+1)];
 					offset += VertexData.ELEMENTS_PER_VERTEX;
@@ -475,10 +479,12 @@ class VertexData
 			var minY:Float = Math.POSITIVE_INFINITY;
 			var maxY:Float = Math.NEGATIVE_INFINITY;
 			var offset:Int = vertexID * VertexData.ELEMENTS_PER_VERTEX + VertexData.POSITION_OFFSET;
-			var x:Float, y:Float, i:Int;
+			var x:Float, y:Float;
 
-			for (i in 0...numVertices)
+			var i = 0;
+			while (i < numVertices)
 			{
+				++i;
 				x = mRawData[offset];
 				y = mRawData[Std.int(offset+1)];
 				offset += VertexData.ELEMENTS_PER_VERTEX;
@@ -543,8 +549,10 @@ class VertexData
 	{
 		var offset:Int = VertexData.COLOR_OFFSET;
 		
-		for (i in 0...mNumVertices)
+		var i = 0;
+		while (i < mNumVertices)
 		{
+			++i;
 			for (j in 0...4)
 				if (mRawData[Std.int(offset+j)] != 1.0) return true;
 

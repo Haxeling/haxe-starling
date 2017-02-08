@@ -89,8 +89,10 @@ class RenderSupport
     /** Creates a new RenderSupport object with an empty matrix stack. */
     public function new()
     {
-		for (i in 0...16) 
+        var i = 0;
+		while (i < 16)
 		{
+            ++i;
 			sMatrixData.push(0);
 		}
         mProjectionMatrix = new Matrix();
@@ -688,7 +690,9 @@ class RenderSupport
         if (numTotalBatches >= 16 && numTotalBatches > 2*numUsedBatches)
         {
             var numToRemove:Int = numTotalBatches - numUsedBatches;
-            for (i in 0 ... numToRemove)
+            var i = 0;
+            while (i < numToRemove)
+                ++i;
                 mQuadBatches.pop().dispose();
         }
     }
